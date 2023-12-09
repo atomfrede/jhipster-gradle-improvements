@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
     implementation 'gradle.plugin.io.gatling.gradle:gatling-gradle-plugin:3.9.5.6'
+    implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.4.1.3373'
 }
 
 
