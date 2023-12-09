@@ -1,0 +1,65 @@
+plugins {
+    id "idea"
+    id "eclipse"
+    id "java"
+    id "maven-publish"
+    id "com.gorylenko.gradle-git-properties"
+    id "org.springframework.boot"
+}
+
+idea {
+    module {
+        excludeDirs += files("node_modules")
+    }
+}
+
+eclipse {
+    sourceSets {
+        main {
+            java {
+                srcDirs += ["build/generated/sources/annotationProcessor/java/main"]
+            }
+        }
+    }
+}
+
+configurations {
+    providedRuntime
+    implementation.exclude module: "spring-boot-starter-tomcat"
+}
+
+repositories {
+    // Local maven repository is required for libraries built locally with maven like development jhipster-bom.
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
+    // jhipster-needle-gradle-repositories - JHipster will add additional repositories
+}
+
+gitProperties {
+    failOnNoGitDirectory = false
+    keys = ["git.branch", "git.commit.id.abbrev", "git.commit.id.describe"]
+}
+
+defaultTasks "bootRun"
+
+springBoot {
+    mainClass = "com.mycompany.myapp.JhgradleupdatesApp"
+}
+
+tasks.withType(com.gorylenko.GenerateGitPropertiesTask).configureEach {
+    outputs.doNotCacheIf("Task is always executed") { true }
+}
+
+tasks.register('cleanResources', Delete) {
+    delete "build/resources"
+}
+
+wrapper {
+    gradleVersion = "8.5"
+}

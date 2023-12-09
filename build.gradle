@@ -1,11 +1,6 @@
 plugins {
-    id "java"
-    id "maven-publish"
-    id "idea"
-    id "eclipse"
-    id "org.springframework.boot"
-    id "com.gorylenko.gradle-git-properties"
     id "com.github.node-gradle.node"
+    id 'jhipster.common-conventions'
     id 'jhipster.gatling-conventions'
     id 'jhipster.cucumber-conventions'
     id 'jhipster.test-conventions'
@@ -13,7 +8,7 @@ plugins {
     id 'jhipster.cache-conventions'
     id 'jhipster.docker-conventions'
     id 'jhipster.code-quality-conventions'
-    id "org.liquibase.gradle"
+    id 'jhipster.liquibase-conventions'
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
@@ -36,7 +31,6 @@ ext {
     }
 }
 
-apply from: "gradle/liquibase.gradle"
 // jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
 
 if (project.hasProperty("prod") || project.hasProperty("gae")) {
@@ -60,59 +54,6 @@ if (project.hasProperty("gae")) {
         }
     }
     appengineStage.dependsOn thinResolve
-}
-
-
-idea {
-    module {
-        excludeDirs += files("node_modules")
-    }
-}
-
-eclipse {
-    sourceSets {
-        main {
-            java {
-                srcDirs += ["build/generated/sources/annotationProcessor/java/main"]
-            }
-        }
-    }
-}
-
-defaultTasks "bootRun"
-
-springBoot {
-    mainClass = "com.mycompany.myapp.JhgradleupdatesApp"
-}
-
-
-
-gitProperties {
-    failOnNoGitDirectory = false
-    keys = ["git.branch", "git.commit.id.abbrev", "git.commit.id.describe"]
-}
-
-tasks.withType(com.gorylenko.GenerateGitPropertiesTask).configureEach {
-  outputs.doNotCacheIf("Task is always executed") { true }
-}
-
-
-configurations {
-    providedRuntime
-    implementation.exclude module: "spring-boot-starter-tomcat"
-}
-
-repositories {
-    // Local maven repository is required for libraries built locally with maven like development jhipster-bom.
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
-        mavenContent {
-            snapshotsOnly()
-        }
-    }
-    // jhipster-needle-gradle-repositories - JHipster will add additional repositories
 }
 
 dependencies {
@@ -178,13 +119,7 @@ if (project.hasProperty("gae")) {
     bootJar.dependsOn = [createPom]
 }
 
-task cleanResources(type: Delete) {
-    delete "build/resources"
-}
 
-wrapper {
-    gradleVersion = "8.5"
-}
 
 task webapp_test(type: NpmTask) {
     inputs.property('appVersion', project.version)
