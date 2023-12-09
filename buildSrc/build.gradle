@@ -9,6 +9,10 @@ repositories {
 dependencies {
     implementation 'gradle.plugin.io.gatling.gradle:gatling-gradle-plugin:3.9.5.6'
     implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.4.1.3373'
+    implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.23.3'
+    implementation 'com.github.andygoossens:gradle-modernizer-plugin:1.9.0'
+    implementation 'io.spring.nohttp:nohttp-gradle:0.0.11'
+    implementation 'com.google.cloud.tools:jib-gradle-plugin:3.4.0'
 }
 
 
