@@ -1,0 +1,16 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    gradlePluginPortal() // so that external plugins can be resolved in dependencies section
+}
+
+dependencies {
+    implementation 'gradle.plugin.io.gatling.gradle:gatling-gradle-plugin:3.9.5.6'
+}
+
+
+
+
+

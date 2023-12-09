@@ -12,7 +12,7 @@ plugins {
     id "com.diffplug.spotless"
     id "io.spring.nohttp"
     id "com.github.andygoossens.gradle-modernizer-plugin"
-    id "io.gatling.gradle"
+    id 'jhipster.gatling-conventions'
     id "org.liquibase.gradle"
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
@@ -109,16 +109,7 @@ test {
     reports.html.required = false
 }
 
-sourceSets {
-    gatling {
-        java.srcDirs = ["src/test/java/gatling/simulations"]
-        resources.srcDirs = ["src/test/gatling/conf"]
-    }
-}
 
-gatling {
-    simulations = { include "**/*Test*.java" }
-}
 
 modernizer {
     failOnViolations = true
@@ -257,7 +248,7 @@ dependencies {
     testImplementation "io.cucumber:cucumber-spring"
     testImplementation "org.junit.platform:junit-platform-console"
     testImplementation "org.testng:testng"
-    testImplementation "io.gatling.highcharts:gatling-charts-highcharts:${gatlingVersion}"
+//    testImplementation "io.gatling.highcharts:gatling-charts-highcharts:${gatlingVersion}"
     // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 

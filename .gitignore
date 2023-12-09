@@ -129,6 +129,8 @@ Desktop.ini
 *~
 .merge_file*
 
+buildSrc/build
+buildSrc/.gradle
 ######################
 # Gradle Wrapper
 ######################
