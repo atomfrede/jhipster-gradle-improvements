@@ -11,20 +11,15 @@ configurations {
 }
 
 dependencies {
-    developmentOnly "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
-    implementation "org.postgresql:postgresql"
-    testImplementation "org.testcontainers:postgresql"
+
+
 }
 
 ext {
     springProfiles = "dev" + springProfiles
 }
 
-springBoot {
-    buildInfo {
-        excludes = ['time']
-    }
-}
+
 
 bootRun {
     args = ["--spring.profiles.active=${springProfiles}"]

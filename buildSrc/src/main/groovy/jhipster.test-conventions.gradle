@@ -1,3 +1,10 @@
+ext {
+    integrationTestProfiles = "testdev"
+    if (project.hasProperty("prod")) {
+        integrationTestProfiles = "testprod"
+    }
+}
+
 test {
     useJUnitPlatform()
     exclude "**/*IT*", "**/*IntTest*"
@@ -33,11 +40,7 @@ tasks.register('integrationTest', Test) {
         events 'FAILED', 'SKIPPED'
     }
 
-    if (project.hasProperty("prod")) {
-        systemProperty('spring.profiles.active', 'testprod')
-    } else {
-        systemProperty('spring.profiles.active', 'testdev')
-    }
+    systemProperty('spring.profiles.active', integrationTestProfiles)
     systemProperty('java.security.egd', 'file:/dev/./urandom')
     // uncomment if the tests reports are not generated
     // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484

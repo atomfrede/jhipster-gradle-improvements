@@ -15,21 +15,13 @@ dependencies {
     testImplementation "org.testcontainers:postgresql"
 }
 
-ext {
-    springProfiles = "prod" + springProfiles
 
-    if (project.hasProperty("api-docs")) {
-        springProfiles += ",api-docs"
-    }
-}
 
 springBoot {
     buildInfo()
 }
 
-bootRun {
-    args = ["--spring.profiles.active=${springProfiles}"]
-}
+
 
 task webapp(type: NpmTask) {
     dependsOn npmInstall
@@ -37,18 +29,7 @@ task webapp(type: NpmTask) {
     environment = [APP_VERSION: project.version]
 }
 
-processResources {
-    inputs.property('version', version)
-    inputs.property('springProfiles', springProfiles)
-    filesMatching("**/application.yml") {
-        filter {
-            it.replace("#project.version#", version)
-        }
-        filter {
-            it.replace("#spring.profiles.active#", springProfiles)
-        }
-    }
-}
+
 
 
 

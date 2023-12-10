@@ -1,0 +1,58 @@
+plugins {
+    id "org.springframework.boot"
+}
+
+ext {
+    springProfiles = ""
+    if (project.hasProperty("tls")) {
+        springProfiles += ",tls"
+    }
+    if (project.hasProperty("e2e")) {
+        springProfiles += ",e2e"
+    }
+    if (project.hasProperty("prod")) {
+        springProfiles = "prod" + springProfiles
+    } else {
+        springProfiles = "dev" + springProfiles
+    }
+
+    if (project.hasProperty("api-docs")) {
+        springProfiles += ",api-docs"
+    }
+}
+
+configurations {
+    providedRuntime
+    implementation.exclude module: "spring-boot-starter-tomcat"
+}
+
+defaultTasks "bootRun"
+
+springBoot {
+    mainClass = "com.mycompany.myapp.JhgradleupdatesApp"
+}
+
+bootRun {
+    args = ["--spring.profiles.active=${springProfiles}"]
+}
+
+springBoot {
+    buildInfo {
+        excludes = ['time']
+    }
+}
+
+processResources {
+    inputs.property('version', version)
+    inputs.property('springProfiles', springProfiles)
+    filesMatching("**/application.yml") {
+        filter {
+            it.replace("#project.version#", version)
+        }
+        filter {
+            it.replace("#spring.profiles.active#", springProfiles)
+        }
+    }
+}
+
+processResources.dependsOn bootBuildInfo

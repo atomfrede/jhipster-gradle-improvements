@@ -4,7 +4,12 @@ plugins {
     id "java"
     id "maven-publish"
     id "com.gorylenko.gradle-git-properties"
-    id "org.springframework.boot"
+}
+
+dependencies {
+    // import JHipster dependencies BOM
+    implementation platform("tech.jhipster:jhipster-dependencies:${jhipsterDependenciesVersion}")
+
 }
 
 idea {
@@ -21,11 +26,6 @@ eclipse {
             }
         }
     }
-}
-
-configurations {
-    providedRuntime
-    implementation.exclude module: "spring-boot-starter-tomcat"
 }
 
 repositories {
@@ -46,11 +46,6 @@ gitProperties {
     keys = ["git.branch", "git.commit.id.abbrev", "git.commit.id.describe"]
 }
 
-defaultTasks "bootRun"
-
-springBoot {
-    mainClass = "com.mycompany.myapp.JhgradleupdatesApp"
-}
 
 tasks.withType(com.gorylenko.GenerateGitPropertiesTask).configureEach {
     outputs.doNotCacheIf("Task is always executed") { true }
