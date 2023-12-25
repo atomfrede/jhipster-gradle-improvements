@@ -30,7 +30,7 @@ eclipse {
 
 repositories {
     // Local maven repository is required for libraries built locally with maven like development jhipster-bom.
-    mavenLocal()
+    //mavenLocal()
     mavenCentral()
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots/"
